@@ -9,30 +9,31 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/api/users/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<User> getUsers(@PathVariable Long id) {
         return userService.fetchUsers(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/api/users")
+    @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(userService.fetchAllUsers(), HttpStatus.OK);
     }
 
 
-    @PostMapping("/api/users")
+    @PostMapping
     public ResponseEntity<String> createUser(@RequestBody User user) {
         userService.addUser(user);
         return ResponseEntity.ok("User added successfully");
 
     }
 
-    @PutMapping("/api/users/{id}") // Don't forget your HTTP mapping annotation!
+    @PutMapping("{id}") // Don't forget your HTTP mapping annotation!
     public ResponseEntity<String> updateUser(@RequestBody User updateUser, @PathVariable Long id) {
         boolean updated = userService.updateUser(updateUser, id);
 
