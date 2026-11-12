@@ -56,14 +56,14 @@ public class UserService {
         user.setLastName(userRequest.getLastName());
         user.setEmail(userRequest.getEmail());
         user.setPhone(userRequest.getPhone());
-        if (user.getAddress() != null) {
+        if (userRequest.getAddressDTO() != null) {
             Address address = new Address();
             address.setStreet(userRequest.getAddressDTO().getStreet());
             address.setCity(userRequest.getAddressDTO().getCity());
             address.setState(userRequest.getAddressDTO().getState());
             address.setCounty(userRequest.getAddressDTO().getCounty());
             address.setZipCode(userRequest.getAddressDTO().getZipCode());
-
+            user.setAddress(address);
         }
 
     }
@@ -76,15 +76,14 @@ public class UserService {
         response.setEmail(user.getEmail());
         response.setPhone(user.getPhone());
 
-        if (response.getAddressDTO() != null) {
+        if (user.getAddress() != null) {
             AddressDTO addressDto = new AddressDTO();
             addressDto.setStreet(user.getAddress().getStreet());
             addressDto.setCity(user.getAddress().getCity());
             addressDto.setCounty(user.getAddress().getCounty());
             addressDto.setState(user.getAddress().getState());
             addressDto.setZipCode(user.getAddress().getZipCode());
-
-
+            response.setAddressDTO(addressDto);
         }
         return response;
     }
